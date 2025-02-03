@@ -116,6 +116,7 @@ with col3:
         
         try:
             # Предсказание с использованием модели
+            st.write("Выполнение предсказания...")
             prediction = model.predict(image_array.reshape(1, -1))
             prediction_proba = model.predict_proba(image_array.reshape(1, -1))  # Получение вероятностных оценок
             confidence = np.max(prediction_proba) * 100  # Расчет процента уверенности
