@@ -26,7 +26,7 @@ url = 'https://drive.google.com/uc?id=1AyPDoibUsYhx1CnFkFouPh_fIy0pXpB5'
 model_path = 'best_model_rf.joblib'
 
 # Загрузка файла с Google Drive
-@st.cache(allow_output_mutation=True)
+@st.cache_data
 def load_model_from_drive():
     gdown.download(url, model_path, quiet=False)
     model = joblib.load(model_path)
