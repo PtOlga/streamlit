@@ -6,17 +6,34 @@ import os
 import matplotlib.pyplot as plt
 from streamlit_drawable_canvas import st_canvas
 import cv2
+import gdown
 
-# Specify the path to the folder containing the model
-models_dir = os.path.join(os.path.dirname(__file__), 'models')
-model_path = os.path.join(models_dir, 'best_model_rf.joblib')
+## Specify the path to the folder containing the model
+#models_dir = os.path.join(os.path.dirname(__file__), 'models')
+#model_path = os.path.join(models_dir, 'best_model_rf.joblib')
 
-# Load the model
-try:
+## Load the model
+#try:
+#    model = joblib.load(model_path)
+#except FileNotFoundError:
+#    st.error(f"Model file not found at {model_path}. Please check the path.")
+#    st.stop()
+
+# URL файла на Google Drive
+url = 'https://drive.google.com/uc?id=1AyPDoibUsYhx1CnFkFouPh_fIy0pXpB5'
+
+# Локальный путь для сохранения файла
+model_path = 'best_model_rf.joblib'
+
+# Загрузка файла с Google Drive
+@st.cache(allow_output_mutation=True)
+def load_model_from_drive():
+    gdown.download(url, model_path, quiet=False)
     model = joblib.load(model_path)
-except FileNotFoundError:
-    st.error(f"Model file not found at {model_path}. Please check the path.")
-    st.stop()
+    return model
+
+# Загрузка модели
+model = load_model_from_drive()
 
 # Function to preprocess the drawn image
 def preprocess_image(image):
