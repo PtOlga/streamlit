@@ -15,18 +15,11 @@ url = 'https://drive.google.com/uc?id=1AyPDoibUsYhx1CnFkFouPh_fIy0pXpB5'
 model_path = 'best_model_rf.joblib'
 
 # Загрузка файла с Google Drive
-@st.cache_data
+@st.cache(allow_output_mutation=True)
 def load_model_from_drive():
-    try:
-        st.write("Загрузка модели с Google Drive...")
-        gdown.download(url, model_path, quiet=False)
-        st.write("Модель загружена успешно.")
-        model = joblib.load(model_path)
-        st.write("Модель загружена и готова к использованию.")
-        return model
-    except Exception as e:
-        st.error(f"Ошибка при загрузке модели: {e}")
-        st.stop()
+    gdown.download(url, model_path, quiet=False)
+    model = joblib.load(model_path)
+    return model
 
 # Загрузка модели
 model = load_model_from_drive()
